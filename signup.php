@@ -9,19 +9,23 @@ if(isset($_POST['new_post'])){
     $user_name = $_POST['user_name'];
     $key = $_POST['password'];
 
-    if(!empty($_FILES['img']['tmp_name'])){ //image required to upload
-        $image_contents = file_get_contents($_FILES['img']['tmp_name']);
-        $img_name = $_FILES['img']['name'];
-        // encrypt image
-        $iv = random_bytes(16);
-        $encrypted_img = openssl_encrypt($image_contents, $cipher, $key, OPENSSL_RAW_DATA, $iv);
-        $img_hex = bin2hex($encrypted_img);
-    }
-    
     //encrypt user input
     $iv = random_bytes(16);
     $iv_hex = bin2hex($iv);
 
+    if(!empty($_FILES['img']['tmp_name'])){ //image required to upload
+        $image_contents = file_get_contents($_FILES['img']['tmp_name']);
+        $img_name = $_FILES['img']['name'];
+        // encrypt image
+        //$iv = random_bytes(16);
+        $encrypted_img = openssl_encrypt($image_contents, $cipher, $key, OPENSSL_RAW_DATA, $iv);
+        $img_hex = bin2hex($encrypted_img);
+    } else {
+        echo '<div class="d-flex alert alert-danger justify-content-center" role="alert">
+        ERROR: Please add an antigen test photo, if you did the image may be too big.
+        </div>';
+    }
+    
     //C
     $escaped_user = $conn -> real_escape_string($_POST['user_name']); // only real_escape for user input
     $encrypted_user = openssl_encrypt($escaped_user, $cipher, $key, OPENSSL_RAW_DATA, $iv);
@@ -58,10 +62,7 @@ if(isset($_POST['new_post'])){
         if(mysqli_query($conn, $query)){
             header("Location: login.php");
             die;
-        } else {
-            echo '<h3>Success</h3>';
         }
-        
     } else {
         echo "<h3>Please enter username and password.</h3>";
     }
@@ -70,13 +71,16 @@ if(isset($_POST['new_post'])){
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <title>Signup</title>
 </head>
+
 <body class="bg-dark">
     <div class="d-flex align-items-center justify-content-center pt-2">
         <div class="col-11 col-md-8 col-lg-5 col-xxl-4 p-5 bg-light rounded">
@@ -107,8 +111,8 @@ if(isset($_POST['new_post'])){
                     <input type="password" class="form-control" id="password" name="password">
                 </div>
                 <div class="input-group">
-                <span class="input-group-text">Close contacts:</span>
-                <textarea class="form-control" aria-label="With textarea" name="list"></textarea>
+                    <span class="input-group-text">Close contacts:</span>
+                    <textarea class="form-control" aria-label="With textarea" name="list"></textarea>
                 </div>
                 <br>
                 <input type="file" id="img" name="img" accept="image/*">
@@ -120,4 +124,5 @@ if(isset($_POST['new_post'])){
         </div>
     </div>
 </body>
+
 </html>

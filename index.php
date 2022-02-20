@@ -3,19 +3,72 @@ session_start();
 include("connection.php");
 include("functions.php");
 $user_data = check_login($conn);
+$cipher = 'AES-128-CBC';
 ?>
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thass's website</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <title>HSE PORTAL - Authenticated</title>
 </head>
+
 <body>
-  <a href="logout.php">Logout</a>
-  <h1>Index page</h1>
-  <br>
-  Hello, <?php echo $user_data['user_name']; ?>
+    <?php
+        $plain_password = $_SESSION['plain_password'];
+        $iv_bin = hex2bin($user_data['iv']);
+
+        $full_name_bin = hex2bin($user_data['full_name']);
+        $unencrypted_full_name = openssl_decrypt($full_name_bin,$cipher,$plain_password,OPENSSL_RAW_DATA,$iv_bin);
+
+        $address_bin = hex2bin($user_data['address']);
+        $unencrypted_address = openssl_decrypt($address_bin,$cipher,$plain_password,OPENSSL_RAW_DATA,$iv_bin);
+
+        $dob_bin = hex2bin($user_data['dob']);
+        $unencrypted_dob = openssl_decrypt($dob_bin,$cipher,$plain_password,OPENSSL_RAW_DATA,$iv_bin);
+
+        $phone_bin = hex2bin($user_data['phone_number']);
+        $unencrypted_phone = openssl_decrypt($phone_bin,$cipher,$plain_password,OPENSSL_RAW_DATA,$iv_bin);
+
+        $list_bin = hex2bin($user_data['list']);
+        $unencrypted_list = openssl_decrypt($list_bin,$cipher,$plain_password,OPENSSL_RAW_DATA,$iv_bin);
+        
+        $image = ($user_data['img_contents']);
+        $unencrypted_image = openssl_decrypt(hex2bin($image), $cipher, $plain_password, OPENSSL_RAW_DATA, $iv_bin);
+        $display_unencrypted_image = '<img width="800" src="data:image/jpeg;base64,'.base64_encode( $unencrypted_image ).'"/>';
+        //echo $unencrypted_image;
+
+        // displays decrypted information to authenticated user.
+        echo '
+        <div class="p-3 w-50">
+        <ul class="list-group">
+        <li class="list-group-item"><h5>These are the details you entered:</h5></li>
+        <li class="list-group-item">'.$unencrypted_full_name.'</li>
+        <li class="list-group-item">'.$unencrypted_address.'</li>
+        <li class="list-group-item">'.$unencrypted_dob.'</li>
+        <li class="list-group-item">'.$unencrypted_phone.'</li>
+        <li class="list-group-item">'.$unencrypted_list.'</li>
+        <li class="list-group-item">'.$display_unencrypted_image.'</li>
+        </ul>
+        </div>';
+    ?>
+    <br>
+    <div class="p-3">
+        <a href="logout.php">
+            <button type="button" class="btn btn-primary">Logout</button>
+        </a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
+    </script>
 </body>
+
 </html>
