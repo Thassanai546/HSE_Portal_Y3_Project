@@ -2,6 +2,7 @@
 Cybercrime Year 3 Project: HSE Portal
 + Built with PHP.
 + CSS made with <a href="https://getbootstrap.com/">Bootstrap 5</a>.
++ All user personal information is encrypted with AES when stored.
 
 <img src="https://user-images.githubusercontent.com/72495327/154855257-020e2dff-1b72-42d5-adc4-5e28a68a53de.jpg">
 
