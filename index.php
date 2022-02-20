@@ -42,7 +42,7 @@ $cipher = 'AES-128-CBC';
         
         $image = ($user_data['img_contents']);
         $unencrypted_image = openssl_decrypt(hex2bin($image), $cipher, $plain_password, OPENSSL_RAW_DATA, $iv_bin);
-        $display_unencrypted_image = '<img width="800" src="data:image/jpeg;base64,'.base64_encode( $unencrypted_image ).'"/>';
+        $display_unencrypted_image = '<img class="img-fluid" width="800" src="data:image/jpeg;base64,'.base64_encode( $unencrypted_image ).'"/>';
         //echo $unencrypted_image;
 
         // displays decrypted information to authenticated user.
