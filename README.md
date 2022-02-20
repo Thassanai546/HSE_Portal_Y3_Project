@@ -10,4 +10,4 @@ Cybercrime Year 3 Project: HSE Portal
 ##
 Built by Thassanai McCabe, Cyber group A
 <br><br>
-[![forthebadge](https://forthebadge.com/images/badges/powered-by-coffee.svg)](https://forthebadge.com)
+![forthebadge](https://forthebadge.com/images/badges/powered-by-coffee.svg)
