@@ -47,7 +47,9 @@ $cipher = 'AES-128-CBC';
 
         // displays decrypted information to authenticated user.
         echo '
-        <div class="p-3 w-50">
+        <div class="d-flex align-items-center justify-content-center pt-2">
+        <div class="p-3 w-50 bg-light rounded">
+        Currently logged in as: '.$user_data['user_name'].'<br><br>
         <ul class="list-group">
         <li class="list-group-item"><h5>These are the details you entered:</h5></li>
         <li class="list-group-item">'.$unencrypted_full_name.'</li>
@@ -57,10 +59,11 @@ $cipher = 'AES-128-CBC';
         <li class="list-group-item">'.$unencrypted_list.'</li>
         <li class="list-group-item">'.$display_unencrypted_image.'</li>
         </ul>
+        </div>
         </div>';
     ?>
     <br>
-    <div class="p-3">
+    <div class="d-flex align-items-center justify-content-center pt-2">
         <a href="logout.php">
             <button type="button" class="btn btn-primary">Logout</button>
         </a>
