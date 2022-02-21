@@ -51,7 +51,7 @@ $cipher = 'AES-128-CBC';
         <div class="p-3 w-50 bg-light rounded">
         Currently logged in as: '.$user_data['user_name'].'<br><br>
         <ul class="list-group">
-        <li class="list-group-item"><h5>These are the details you entered:</h5></li>
+        <li class="list-group-item bg-secondary text-light"><h5">These are the details you entered:</h5></li>
         <li class="list-group-item">'.$unencrypted_full_name.'</li>
         <li class="list-group-item">'.$unencrypted_address.'</li>
         <li class="list-group-item">'.$unencrypted_dob.'</li>
