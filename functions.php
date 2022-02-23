@@ -17,6 +17,7 @@ function check_login($conn){
 
 function random_num($length){
     // session management
+    // this is 'user_id' in the database
     $text = "";
     if($length < 5) {
         $length = 5;

@@ -111,7 +111,7 @@ if(isset($_POST['new_post'])){
                     <input type="password" class="form-control" id="password" name="password">
                 </div>
                 <div class="input-group">
-                    <span class="input-group-text">Close contacts:</span>
+                    <span class="input-group-text">List any close contacts here:</span>
                     <textarea class="form-control" aria-label="With textarea" name="list"></textarea>
                 </div>
                 <br>
