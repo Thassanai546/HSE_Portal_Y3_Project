@@ -82,10 +82,10 @@ if(isset($_POST['new_post'])){
 </head>
 
 <body class="bg-dark">
-    <div class="d-flex align-items-center justify-content-center pt-2">
+    <div class="d-flex align-items-center justify-content-center pt-3">
         <div class="col-11 col-md-8 col-lg-5 col-xxl-4 p-5 bg-light rounded">
             <form method="post" enctype='multipart/form-data'>
-                <h2>Signup</h2>
+                <h3>Signup</h3>
                 <div class="mb-3 pt-3">
                     <label for="input" class="form-label">Username</label>
                     <input type="text" class="form-control" id="user_name" name="user_name">

@@ -23,7 +23,7 @@ $cipher = 'AES-128-CBC';
 <body>
     <?php
         $plain_password = $_SESSION['plain_password'];
-        $iv_bin = hex2bin($user_data['iv']);
+        $iv_bin = hex2bin($user_data['iv']); // IV is stored on DB in hex, we need it in bin to decrypt
 
         $full_name_bin = hex2bin($user_data['full_name']);
         $unencrypted_full_name = openssl_decrypt($full_name_bin,$cipher,$plain_password,OPENSSL_RAW_DATA,$iv_bin);
@@ -45,7 +45,7 @@ $cipher = 'AES-128-CBC';
         $display_unencrypted_image = '<img class="img-fluid" width="800" src="data:image/jpeg;base64,'.base64_encode( $unencrypted_image ).'"/>';
         //echo $unencrypted_image;
 
-        // displays decrypted information to authenticated user.
+        // displays decrypted information to authenticated user using a list.
         echo '
         <div class="d-flex align-items-center justify-content-center pt-2">
         <div class="p-3 w-50 bg-light rounded">
