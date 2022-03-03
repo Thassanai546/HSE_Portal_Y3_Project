@@ -21,8 +21,8 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
         $verify = password_verify($_POST['password'],$hash); // where POST password is the password the user entered in the form
 
         if($verify){
-            $_SESSION['user_id'] = $user_data['user_id']; // this stops users entering index.php without logging in
-            $_SESSION['plain_password'] = $_POST['password']; // this allows users to decrypt data in index.php
+            $_SESSION['user_id'] = $user_data['user_id'];       // this stops users entering index.php without logging in
+            $_SESSION['plain_password'] = $_POST['password'];   // this allows users to decrypt data in index.php
             header("Location: index.php");
             die;
         } else {

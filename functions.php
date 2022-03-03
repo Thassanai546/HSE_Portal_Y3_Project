@@ -7,7 +7,7 @@ function check_login($conn){
         $result = mysqli_query($conn,$query);
         if($result && mysqli_num_rows($result) > 0){
             $user_data = mysqli_fetch_assoc($result);
-            return $user_data;
+            return $user_data; // when a user authenticates their data gets send to index.php
         }
     }
     //redirect to login
