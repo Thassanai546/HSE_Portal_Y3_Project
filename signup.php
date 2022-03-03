@@ -22,11 +22,10 @@ if(isset($_POST['new_post'])){
         $img_hex = bin2hex($encrypted_img);
     } else {
         echo '<div class="d-flex alert alert-danger justify-content-center" role="alert">
-        ERROR: Please add an antigen test photo, if you did the image may be too big.
+        ERROR: Please add an antigen test photo, if you did, the image may be too big.
         </div>';
     }
     
-    //C
     $escaped_user = $conn -> real_escape_string($_POST['user_name']); // only real_escape for user input
     $encrypted_user = openssl_encrypt($escaped_user, $cipher, $key, OPENSSL_RAW_DATA, $iv);
     $encrypted_user = bin2hex($encrypted_user);
@@ -57,9 +56,11 @@ if(isset($_POST['new_post'])){
     if(!empty($user_name) && !empty($key) && !is_numeric($user_name)){
         //saving to DB
         $user_id = random_num(20);
-        $query = "INSERT INTO users (user_id,user_name,full_name,address,dob,phone_number,password,iv,img_file_name,img_contents,list) values 
-        ('$user_id','$escaped_user','$encrypted_full_name','$encrypted_address','$encrypted_dob','$encrypted_phone','$key','$iv_hex','$img_name','$img_hex','$encrypted_list')";
-        if(mysqli_query($conn, $query)){
+        $sql = $conn->prepare("INSERT INTO users (user_id,user_name,full_name,address,dob,phone_number,password,iv,img_file_name,img_contents,list) values 
+        (?,?,?,?,?,?,?,?,?,?,?)");
+        $sql->bind_param("issssssssss",$user_id,$escaped_user,$encrypted_full_name,$encrypted_address,$encrypted_dob,$encrypted_phone,$key,$iv_hex,$img_name,$img_hex,$encrypted_list);
+
+        if($sql->execute()){
             header("Location: login.php");
             die;
         }
