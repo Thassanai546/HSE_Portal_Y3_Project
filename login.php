@@ -5,15 +5,20 @@ include("functions.php");
 
 if($_SERVER['REQUEST_METHOD'] == "POST"){
     $user_name = $_POST['user_name'];
-    $sql = "SELECT user_name,password,user_id FROM users WHERE user_name = '$user_name' limit 1";
-    $result = $conn->query($sql);
+    
+    // Prepared Statement
+    $sql = $conn->prepare("SELECT user_name,password,user_id FROM users WHERE user_name = ? limit 1");
+    $sql->bind_param('s',$user_name);
+    $sql->execute();
+    $result = $sql->get_result();
+    
     if($result->num_rows > 0){
 
-        //if table password = input password
+        //verify hash of password from database against hash of password entered in login form.
         $user_data = mysqli_fetch_assoc($result);
         $hash = $user_data['password'];
         $hash  = hex2bin($hash);
-        $verify = password_verify($_POST['password'],$hash);
+        $verify = password_verify($_POST['password'],$hash); // where POST password is the password the user entered in the form
 
         if($verify){
             $_SESSION['user_id'] = $user_data['user_id']; // this stops users entering index.php without logging in
