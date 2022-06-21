@@ -1,6 +1,6 @@
 # HSE_Portal_Y3_Project
 This was a project assigned during year 3 of Cybercrime & IT Security. <br>
-+ Uses <a href="https://www.apachefriends.org/">XAMPP</a> Stack
++ Uses <a href="https://www.apachefriends.org/">XAMPP</a> Stack.
 + Made using PHP.
 + Frontend uses <a href="https://getbootstrap.com/">Bootstrap 5</a>.
 + All user personal information is encrypted with AES when being stored on the database.
